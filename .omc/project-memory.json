@@ -133,6 +133,12 @@
       "type": "file"
     },
     {
+      "path": "HEXACO.md",
+      "accessCount": 4,
+      "lastAccessed": 1774596411868,
+      "type": "file"
+    },
+    {
       "path": "src\\app\\test\\[episode]\\page.tsx",
       "accessCount": 3,
       "lastAccessed": 1774590117080,
@@ -268,12 +274,6 @@
       "path": "hexaco_detailed_plan_v2.md",
       "accessCount": 1,
       "lastAccessed": 1774593015872,
-      "type": "file"
-    },
-    {
-      "path": "HEXACO.md",
-      "accessCount": 1,
-      "lastAccessed": 1774593195051,
       "type": "file"
     },
     {
