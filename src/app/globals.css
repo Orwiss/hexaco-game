@@ -23,3 +23,13 @@ body {
   font-size: 20px;
   background: #111111;
 }
+
+/* Scale up all text for readability */
+h1, h2, h3 { letter-spacing: -0.01em; }
+.text-xs { font-size: 0.85rem !important; }
+.text-sm { font-size: 0.95rem !important; }
+.text-base { font-size: 1.1rem !important; }
+.text-lg { font-size: 1.3rem !important; }
+.text-xl { font-size: 1.5rem !important; }
+.text-2xl { font-size: 1.75rem !important; }
+.text-3xl { font-size: 2.1rem !important; }
