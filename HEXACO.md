@@ -138,6 +138,104 @@ HEXACO 모델을 측정하는 공식 도구는 여러 버전이 있으며, **문
 | **HEXACO-60** | **60문항** | Ashton & Lee (2009) | 단축형. 요인당 10문항. 시간 제약 시 사용 |
 | **BHI** (Brief HEXACO Inventory) | **24문항** | de Vries (2013) | 초간이형. 요인당 4문항, 하위요인당 1문항. 스크리닝용 |
 
+### HEXACO-60 전체 문항 (Ashton & Lee, 2009)
+
+요인당 10문항. R = 역채점. 리커트 5점 (1=strongly disagree ~ 5=strongly agree).
+
+**H — 정직-겸손 (Honesty-Humility)**
+
+| # | 문항 | R |
+|---|------|---|
+| 1 | I wouldn't use flattery to get a raise or promotion at work, even if I thought it would succeed. | |
+| 2 | If I knew that I could never get caught, I would be willing to steal a million dollars. | R |
+| 3 | Having a lot of money is not especially important to me. | |
+| 4 | I think that I am entitled to more respect than the average person is. | R |
+| 5 | If I want something from someone, I will laugh at that person's worst jokes. | R |
+| 6 | I would never accept a bribe, even if it were very large. | |
+| 7 | I would get a lot of pleasure from owning expensive luxury goods. | R |
+| 8 | I want people to know that I am an important person of high status. | R |
+| 9 | I wouldn't pretend to like someone just to get that person to do favors for me. | |
+| 10 | I'd be tempted to use counterfeit money, if I were sure I could get away with it. | R |
+
+**E — 정서성 (Emotionality)**
+
+| # | 문항 | R |
+|---|------|---|
+| 11 | I would feel afraid if I had to travel in bad weather conditions. | |
+| 12 | I sometimes can't help worrying about little things. | |
+| 13 | I can handle difficult situations without needing emotional support from anyone else. | R |
+| 14 | I feel strong emotions when someone close to me is going away for a long time. | |
+| 15 | When it comes to physical danger, I am very fearful. | |
+| 16 | Even in an emergency I wouldn't feel like panicking. | R |
+| 17 | I feel like crying when I see other people crying. | |
+| 18 | I worry a lot less than most people do. | R |
+| 19 | When I suffer from a painful experience, I need someone to make me feel comfortable. | |
+| 20 | I remain unemotional even in situations where most people get very sentimental. | R |
+
+**X — 외향성 (eXtraversion)**
+
+| # | 문항 | R |
+|---|------|---|
+| 21 | I feel reasonably satisfied with myself overall. | |
+| 22 | I rarely express my opinions in group meetings. | R |
+| 23 | I prefer jobs that involve active social interaction to those that involve working alone. | |
+| 24 | On most days, I feel cheerful and optimistic. | |
+| 25 | I sometimes feel that I am a worthless person. | R |
+| 26 | I tend to be quite outspoken in group discussions. | |
+| 27 | I avoid making "small talk" with people. | R |
+| 28 | I seldom feel happy or energized without a reason. | R |
+| 29 | The first thing that I always do in a new place is to make friends. | |
+| 30 | I am energetic nearly all the time. | |
+
+**A — 우호성 (Agreeableness)**
+
+| # | 문항 | R |
+|---|------|---|
+| 31 | My attitude toward people who have treated me badly is "forgive and forget." | |
+| 32 | I tend to be lenient in judging other people. | |
+| 33 | Even when people make a lot of mistakes, I rarely say anything negative. | |
+| 34 | People sometimes tell me that I am too critical of others. | R |
+| 35 | I generally accept people's faults without complaining about them. | |
+| 36 | People think of me as someone who has a quick temper. | R |
+| 37 | When people tell me that I'm wrong, my first reaction is to argue with them. | R |
+| 38 | I find it hard to fully forgive someone who has done something mean to me. | R |
+| 39 | I rarely hold a grudge, even against people who have badly wronged me. | |
+| 40 | Most people tend to get angry more quickly than I do. | |
+
+**C — 성실성 (Conscientiousness)**
+
+| # | 문항 | R |
+|---|------|---|
+| 41 | I plan ahead and organize things, to avoid scrambling at the last minute. | |
+| 42 | I often push myself very hard when trying to achieve a goal. | |
+| 43 | When working on something, I don't pay much attention to small details. | R |
+| 44 | I make decisions based on the feeling of the moment rather than on careful thought. | R |
+| 45 | I often do things on impulse. | R |
+| 46 | I always try to be accurate in my work, even at the expense of time. | |
+| 47 | I don't allow my work to be sloppy and disorganized. | |
+| 48 | People often call me a perfectionist. | |
+| 49 | When working, I sometimes have difficulty due to being disorganized. | R |
+| 50 | I prefer to do whatever comes to mind, rather than stick to a plan. | R |
+
+**O — 경험에 대한 개방성 (Openness to Experience)**
+
+| # | 문항 | R |
+|---|------|---|
+| 51 | I would be quite bored by a visit to an art gallery. | R |
+| 52 | I'm interested in learning about the history and politics of other countries. | |
+| 53 | I would enjoy creating a work of art, such as a novel, a song, or a painting. | |
+| 54 | People have sometimes called me "weird" or "eccentric." | |
+| 55 | I think that paying attention to radical ideas is a waste of time. | R |
+| 56 | If I had the opportunity, I would like to attend a classical music concert. | |
+| 57 | I've never really enjoyed looking through an encyclopedia. | R |
+| 58 | I find it boring to discuss philosophy. | R |
+| 59 | I like people who have unconventional views. | |
+| 60 | I think of myself as a somewhat eccentric person. | |
+
+> **⚠️ 주의**: 위 문항은 Ashton & Lee (2009) 원논문 기반입니다. 학술 사용 시 반드시 원논문을 확인하세요. HEXACO-60은 hexaco.org에서 무료 제공되며, 다국어 번역본도 이용 가능합니다.
+
+---
+
 ### 본 프로젝트에서 사용: BHI (24문항)
 
 인터랙티브 웹 테스트 특성상 사용자 이탈을 막기 위해 가장 짧은 **BHI**를 채택.
