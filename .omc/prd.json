@@ -1,0 +1,153 @@
+{
+  "project": "hexaco-game",
+  "description": "BHI 24문항 기반 인터랙티브 웹 성격 테스트 - 대학원생 생존기",
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "프로젝트 스캐폴딩 + 모바일 프레임 레이아웃",
+      "priority": 1,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Next.js App Router 프로젝트가 /app 디렉토리로 생성됨",
+        "TypeScript, Tailwind CSS가 설정됨",
+        "npm run dev 실행 시 에러 없이 로컬 서버 시작",
+        "모바일 프레임 레이아웃 컴포넌트 존재 (max-width: 430px, 중앙 정렬, 양옆 blur 배경)",
+        "GangwonEducationSaeum 폰트가 @font-face로 등록되어 기본 폰트로 적용됨",
+        "/app/page.tsx, /app/test/[episode]/page.tsx, /app/result/page.tsx 라우트 존재"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "핵심 데이터 + 채점 로직",
+      "priority": 2,
+      "passes": true,
+      "acceptanceCriteria": [
+        "lib/types.ts에 BHIResponse, FactorScores, ResultType, Episode, Question 타입 정의됨",
+        "lib/questions.ts에 24개 문항 배열 존재 (id, factor, facet, text(한국어), reverse 필드)",
+        "역채점 문항이 정확히 8개: h2,h4,e3,x2,a4,c3,c4,o1",
+        "lib/scoring.ts에 reverseScore(6-score), calculateFactorScore(4문항 평균), getProfileSD, classifyType 함수 존재",
+        "classifyType: profileSD < 0.816이면 균형형 반환",
+        "classifyType: 8개 유형 가중 매칭 점수 = Σ(w×norm)/Σ(|w|) 계산",
+        "classifyType: T3 가중치가 [+2,+2,+1,0,-2,-1]로 설정됨",
+        "classifyType: 1위-2위 간격 < 0.1이면 두 유형 모두 반환",
+        "정규화 공식: (mean-1)/4*100 → 0~100%",
+        "테스트: (3,3,3,3,3,3) → 균형형, (4.5,4.5,1.5,3,3,3) → T1 은둔형"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Zustand 스토어 + 진행 상태 관리",
+      "priority": 3,
+      "passes": true,
+      "acceptanceCriteria": [
+        "lib/store.ts에 Zustand 스토어 존재",
+        "24문항 응답 상태 (responses: Record<string, number>)",
+        "현재 에피소드(1-6), 현재 문항 인덱스(0-3) 상태",
+        "setResponse(questionId, value) 액션이 응답 저장",
+        "nextQuestion() 액션이 다음 문항/에피소드로 진행",
+        "prevQuestion() 액션이 이전 문항으로 돌아감",
+        "localStorage persist로 브라우저 닫아도 응답 복원",
+        "reset() 액션이 전체 상태 초기화",
+        "소요 시간 타이머 (startTime, completionTimeSec 계산)"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "공통 UI 컴포넌트 (LikertScale, ProgressBar, 전환 애니메이션)",
+      "priority": 4,
+      "passes": true,
+      "acceptanceCriteria": [
+        "components/ui/LikertScale.tsx: 5개 원형 버튼, 크기 점진 증가, 선택 시 컬러 피드백, 테마 컬러 prop",
+        "components/ui/ProgressBar.tsx: 하단 고정, 6칸 에피소드 진행률, 현재 에피소드 하이라이트",
+        "components/ui/EpisodeTransition.tsx: 페이드 블랙 + 내레이션 타이핑 효과 (Framer Motion)",
+        "components/ui/QuestionCard.tsx: 문항 텍스트 + 장면 맥락 분리 표시, '평소의 나를 생각하며' 안내 문구",
+        "모든 터치 타겟 최소 44x44px",
+        "Framer Motion으로 문항 간 슬라이드 전환"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "에피소드 1-6 씬 + 문항 플로우",
+      "priority": 5,
+      "passes": true,
+      "acceptanceCriteria": [
+        "app/test/[episode]/page.tsx가 에피소드 번호(1-6)에 따라 해당 씬 렌더링",
+        "각 에피소드 인트로 화면: 에피소드 번호, 제목, 장면 묘사 텍스트, SVG placeholder 배경",
+        "각 에피소드 4문항이 순서대로 표시, 응답 시 자동 다음 문항 진행",
+        "에피소드별 테마 컬러 적용 (Ep1:앰버, Ep2:블루, Ep3:에메랄드, Ep4:바이올렛, Ep5:슬레이트, Ep6:핑크→앰버)",
+        "에피소드 간 전환 내러티브 표시",
+        "마지막 문항(Ep6 Q4) 응답 후 /result로 자동 이동",
+        "뒤로가기로 이전 문항 수정 가능"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "결과 페이지 (레이더 차트 + 유형 카드 + 상세)",
+      "priority": 6,
+      "passes": true,
+      "acceptanceCriteria": [
+        "app/result/page.tsx에서 Zustand 스토어의 응답으로 채점 실행",
+        "6축 레이더 차트가 D3.js 또는 Recharts로 렌더링됨 (0-100% 정규화)",
+        "유형 카드: 이모지 + 유형 이름 + 한 줄 설명 표시",
+        "9개 유형(8유형+균형형) 모두 카드 데이터 존재",
+        "요인별 가로 바 차트 + 높음/보통/낮음 구간 표시",
+        "1위-2위 간격 < 0.1이면 두 유형 모두 표시",
+        "2위 유형 '비슷한 유형'으로 표시",
+        "면책 문구: BHI 출처 + 간이척도 한계 안내"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "공유 기능 (이미지 생성 + Web Share API + 클립보드)",
+      "priority": 7,
+      "passes": true,
+      "acceptanceCriteria": [
+        "html2canvas로 결과 카드 영역을 이미지(1080x1920)로 변환",
+        "이미지 다운로드 버튼 동작",
+        "Web Share API 지원 시 navigator.share() 호출",
+        "Web Share API 미지원 시 fallback으로 클립보드 링크 복사",
+        "다시 하기 버튼 → 스토어 reset + / 로 이동"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "랜딩 페이지 + 인구통계 폼",
+      "priority": 8,
+      "passes": true,
+      "acceptanceCriteria": [
+        "app/page.tsx: '대학원생 생존기' 세계관 소개, 시작 버튼, 예상 소요시간 안내",
+        "시작 버튼 클릭 → 인구통계 폼 또는 바로 /test/1로 이동",
+        "인구통계: 나이, 성별, 대학원 년차 (모두 선택, 스킵 가능)",
+        "인구통계 응답이 Zustand 스토어에 저장됨"
+      ]
+    },
+    {
+      "id": "US-009",
+      "title": "Supabase 연동 (응답 데이터 저장)",
+      "priority": 9,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Supabase 프로젝트 생성 (ap-northeast-1 또는 ap-southeast-1)",
+        "responses 테이블 DDL 적용 (24문항 + 요인점수 + 유형 + 메타데이터)",
+        "DB 스키마에 result_type_2nd, result_type_2nd_score, is_balanced, avg_response_time_ms, response_variance, dropped_off_at 필드 포함",
+        "lib/supabase.ts에 클라이언트 설정 + saveResponse 함수",
+        "결과 페이지에서 응답 완료 시 자동 저장, 실패 시 1회 retry 후 무시",
+        "환경변수 NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY 사용"
+      ]
+    },
+    {
+      "id": "US-010",
+      "title": "사운드 엔진 + 음소거 토글",
+      "priority": 10,
+      "passes": true,
+      "acceptanceCriteria": [
+        "lib/sound.ts에 사운드 재생 엔진 (Howler.js 또는 Tone.js)",
+        "에피소드별 앰비언트 루프 재생 (placeholder 사운드 OK)",
+        "리커트 선택 시 효과음 재생",
+        "에피소드 완료 시 축하 효과음",
+        "우상단 음소거 토글 (기본: 음소거 ON)",
+        "음소거 상태 localStorage 저장"
+      ]
+    }
+  ]
+}

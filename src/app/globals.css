@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'GangwonEducationSaeum';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'GangwonEducationSaeum', sans-serif;
+
+  --color-ep1: #F59E0B;
+  --color-ep2: #3B82F6;
+  --color-ep3: #10B981;
+  --color-ep4: #8B5CF6;
+  --color-ep5: #1E293B;
+  --color-ep6: #EC4899;
+}
+
+body {
+  font-family: 'GangwonEducationSaeum', sans-serif;
+  background: #111111;
+}

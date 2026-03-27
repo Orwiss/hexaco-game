@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"node -e \\\"\\nconst { QUESTIONS } = require('./src/lib/questions');\\nconst { calculateAllFactorScores, classifyType, getProfileSD, reverseScore } = require('./src/lib/scoring');\\n\\n// Test 1...",
+  "error": "Exit code 1\nnode:internal/modules/cjs/loader:1252\r\n  throw err;\r\n  ^\r\n\r\nError: Cannot find module './src/lib/questions'\r\nRequire stack:\r\n- C:\\Users\\orwis\\Documents\\GitHub\\hexaco-game\\[eval]\r\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1249:15)\r\n    at Function._load (node:internal/modules/cjs/loader:1075:27)\r\n    at TracingChannel.traceSync (node:diagnostics_channel:315:14)\r\n    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)\r\n    at Module.require (node:intern...",
+  "timestamp": "2026-03-27T05:29:09.169Z",
+  "retry_count": 1
+}

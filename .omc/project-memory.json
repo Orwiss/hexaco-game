@@ -1,0 +1,257 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1774589041046,
+  "projectRoot": "C:\\Users\\orwis\\Documents\\GitHub\\hexaco-game",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "16.2.1",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "npm test",
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public",
+      "src"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 0,
+      "lastAccessed": 1774589040982,
+      "keyFiles": []
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1774589040996,
+      "keyFiles": []
+    },
+    "src\\app": {
+      "path": "src\\app",
+      "purpose": "Application code",
+      "fileCount": 0,
+      "lastAccessed": 1774589040998,
+      "keyFiles": []
+    },
+    "src\\components": {
+      "path": "src\\components",
+      "purpose": "UI components",
+      "fileCount": 0,
+      "lastAccessed": 1774589040999,
+      "keyFiles": []
+    },
+    "src\\lib": {
+      "path": "src\\lib",
+      "purpose": "Library code",
+      "fileCount": 0,
+      "lastAccessed": 1774589041000,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src\\app\\result\\page.tsx",
+      "accessCount": 11,
+      "lastAccessed": 1774590245717,
+      "type": "file"
+    },
+    {
+      "path": "src\\app\\layout.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1774590111409,
+      "type": "file"
+    },
+    {
+      "path": "src\\app\\test\\[episode]\\EpisodeClient.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1774590234143,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\LikertScale.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1774590123566,
+      "type": "file"
+    },
+    {
+      "path": "src\\app\\page.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1774590112077,
+      "type": "file"
+    },
+    {
+      "path": "src\\app\\test\\[episode]\\page.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1774590117080,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 2,
+      "lastAccessed": 1774589116884,
+      "type": "file"
+    },
+    {
+      "path": "src\\lib\\types.ts",
+      "accessCount": 2,
+      "lastAccessed": 1774590101103,
+      "type": "file"
+    },
+    {
+      "path": "src\\lib\\scoring.ts",
+      "accessCount": 2,
+      "lastAccessed": 1774590101337,
+      "type": "file"
+    },
+    {
+      "path": "src\\lib\\questions.ts",
+      "accessCount": 2,
+      "lastAccessed": 1774590101643,
+      "type": "file"
+    },
+    {
+      "path": "src\\lib\\store.ts",
+      "accessCount": 2,
+      "lastAccessed": 1774590105595,
+      "type": "file"
+    },
+    {
+      "path": "src\\lib\\sound.ts",
+      "accessCount": 2,
+      "lastAccessed": 1774590106670,
+      "type": "file"
+    },
+    {
+      "path": "src\\lib\\supabase.ts",
+      "accessCount": 2,
+      "lastAccessed": 1774590106726,
+      "type": "file"
+    },
+    {
+      "path": "src\\app\\globals.css",
+      "accessCount": 2,
+      "lastAccessed": 1774590111732,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\ProgressBar.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1774590123898,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\EpisodeTransition.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1774590124311,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\QuestionCard.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1774590124755,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\RadarChart.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1774590125150,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\MuteToggle.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1774590125602,
+      "type": "file"
+    },
+    {
+      "path": "src\\components\\ui\\ShareButtons.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1774590125648,
+      "type": "file"
+    },
+    {
+      "path": "tsconfig.json",
+      "accessCount": 1,
+      "lastAccessed": 1774589119480,
+      "type": "file"
+    },
+    {
+      "path": "next.config.ts",
+      "accessCount": 1,
+      "lastAccessed": 1774589120815,
+      "type": "file"
+    },
+    {
+      "path": "postcss.config.mjs",
+      "accessCount": 1,
+      "lastAccessed": 1774589121914,
+      "type": "file"
+    },
+    {
+      "path": "test-scoring.ts",
+      "accessCount": 1,
+      "lastAccessed": 1774589453666,
+      "type": "file"
+    },
+    {
+      "path": ".env.local",
+      "accessCount": 1,
+      "lastAccessed": 1774589931801,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1774590118128,
+      "type": "directory"
+    }
+  ],
+  "userDirectives": []
+}

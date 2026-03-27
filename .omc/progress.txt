@@ -1,0 +1,94 @@
+# HEXACO Game - Progress Log
+
+## Session Start: 2026-03-27
+
+### Design Decisions (from planning phase)
+- Mobile-first: max-width 430px, desktop shows centered mobile frame with blur bg
+- Font: GangwonEducationSaeum (CDN)
+- Scoring: weighted matching score = Σ(w×norm)/Σ(|w|), profileSD threshold 0.816
+- T3 weights updated to [+2,+2,+1,0,-2,-1] for T1-T3 differentiation
+- 9 types (8 + balanced), tie = gap < 0.1 → show both types
+- 8 reverse-scored items: h2,h4,e3,x2,a4,c3,c4,o1
+- Korean translations with fixes: e2(triple negation), h2(10억원), a4(다른사람에게), x4(대체로), etc.
+- Ep3 scene softened (선배 부탁), Ep5 bittersweet tone, Ep4 networking scene added
+- Share: Web Share API + html2canvas + clipboard (no Kakao SDK)
+- DB: Supabase with extended schema (quality metadata fields)
+
+---
+
+## US-001: Project Scaffolding ✅
+- Created: next.config.ts, tsconfig.json, postcss.config.mjs, globals.css, layout.tsx
+- Mobile frame: max-w-[430px], blur bg decorations
+- Font: GangwonEducationSaeum via CDN @font-face
+- Routes: /, /test/[episode], /result
+
+## US-002: Core Data + Scoring ✅
+- lib/types.ts, lib/questions.ts (24 items, 6 episodes), lib/scoring.ts
+- 8 reverse items: h2,h4,e3,x2,a4,c3,c4,o1
+- Weighted matching: Σ(w×norm)/Σ(|w|), T3=[+2,+2,+1,0,-2,-1]
+- ProfileSD threshold: 4/(2*sqrt(6))≈0.816
+- 9 types (T1-T9 including balanced)
+- Korean translations verified (e2, h2, a4, x4, h4 fixes applied)
+
+## US-003: Zustand Store ✅
+- lib/store.ts with persist middleware (localStorage)
+- responses, currentEpisode, currentQuestionIndex, demographics, timers
+
+## US-004: Common UI ✅
+- LikertScale, ProgressBar, EpisodeTransition, QuestionCard
+- All touch targets ≥44px, Framer Motion animations
+
+## US-005: Episode Flow ✅
+- EpisodeClient.tsx: intro → questions → transition → next episode
+- 6 theme colors, scene contexts, back navigation
+
+## US-006: Result Page ✅
+- SVG RadarChart, type card, factor bars, disclaimer
+- Tied type display, secondary type as "비슷한 유형"
+
+## US-007: Share ✅
+- ShareButtons: html2canvas download, Web Share API, clipboard fallback
+
+## US-008: Landing + Demographics ✅
+- World intro, demographics form (skip-able), reset on start
+
+## US-009: Supabase ✅
+- Project: gonhapfufvqaoedfbeqr (ap-northeast-1)
+- responses table with full schema, RLS + anon insert policy
+- lib/supabase.ts: saveResponse with retry
+
+## US-010: Sound ✅
+- lib/sound.ts: Howler.js, playClick/playEpisodeComplete/playResultReveal
+- MuteToggle: default muted ON, localStorage persist
+- Wired: LikertScale→playClick, EpisodeClient→playEpisodeComplete, Result→playResultReveal
+
+## Architect Review: APPROVED
+- All 10 stories verified against acceptance criteria
+- Minor fix applied: wired playEpisodeComplete and playResultReveal callsites
+
+## Files Changed (Ralph session)
+- src/app/globals.css
+- src/app/layout.tsx
+- src/app/page.tsx
+- src/app/test/[episode]/page.tsx
+- src/app/test/[episode]/EpisodeClient.tsx
+- src/app/result/page.tsx
+- src/lib/types.ts
+- src/lib/questions.ts
+- src/lib/scoring.ts
+- src/lib/store.ts
+- src/lib/supabase.ts
+- src/lib/sound.ts
+- src/components/ui/LikertScale.tsx
+- src/components/ui/ProgressBar.tsx
+- src/components/ui/EpisodeTransition.tsx
+- src/components/ui/QuestionCard.tsx
+- src/components/ui/RadarChart.tsx
+- src/components/ui/ShareButtons.tsx
+- src/components/ui/MuteToggle.tsx
+- package.json
+- tsconfig.json
+- next.config.ts
+- postcss.config.mjs
+- .env.local
+- .gitignore
