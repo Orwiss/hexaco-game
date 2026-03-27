@@ -70,14 +70,22 @@ export default function Home() {
           </div>
 
           <div>
-            <label className="text-sm text-neutral-500 mb-1 block">대학원 몇 년차</label>
-            <input
-              type="number"
-              placeholder="예: 2"
-              value={gradYear}
-              onChange={(e) => setGradYear(e.target.value)}
-              className="w-full px-4 py-3 border border-neutral-200 rounded-xl text-base focus:outline-none focus:border-neutral-400"
-            />
+            <label className="text-sm text-neutral-500 mb-2 block">대학원 몇 학기째</label>
+            <div className="flex gap-2">
+              {['0', '1', '2', '3', '4+'].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setGradYear(s === '4+' ? '4' : s)}
+                  className={`flex-1 py-3 rounded-xl text-sm border-2 transition-colors ${
+                    gradYear === (s === '4+' ? '4' : s)
+                      ? 'border-neutral-900 bg-neutral-900 text-white'
+                      : 'border-neutral-200 text-neutral-600'
+                  }`}
+                >
+                  {s === '4+' ? '4 이상' : s}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

@@ -115,21 +115,27 @@
       "type": "file"
     },
     {
+      "path": "src\\app\\page.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1774592506502,
+      "type": "file"
+    },
+    {
       "path": "src\\components\\ui\\LikertScale.tsx",
       "accessCount": 4,
       "lastAccessed": 1774590123566,
       "type": "file"
     },
     {
-      "path": "src\\app\\page.tsx",
-      "accessCount": 3,
-      "lastAccessed": 1774590112077,
-      "type": "file"
-    },
-    {
       "path": "src\\app\\test\\[episode]\\page.tsx",
       "accessCount": 3,
       "lastAccessed": 1774590117080,
+      "type": "file"
+    },
+    {
+      "path": "src\\app\\globals.css",
+      "accessCount": 3,
+      "lastAccessed": 1774592490674,
       "type": "file"
     },
     {
@@ -172,12 +178,6 @@
       "path": "src\\lib\\supabase.ts",
       "accessCount": 2,
       "lastAccessed": 1774590106726,
-      "type": "file"
-    },
-    {
-      "path": "src\\app\\globals.css",
-      "accessCount": 2,
-      "lastAccessed": 1774590111732,
       "type": "file"
     },
     {
