@@ -2,3 +2,7 @@
 {"t":0,"agent":"system","event":"mode_change","mode_from":"none","mode_to":"ralph"}
 {"t":0,"agent":"a17f080","agent_type":"architect","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"a17f080","agent_type":"architect","event":"agent_stop","success":true,"duration_ms":124008}
+{"t":0,"agent":"a86ea86","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a3a0347","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a86ea86","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":163053}
+{"t":0,"agent":"a3a0347","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":181636}

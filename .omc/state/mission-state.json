@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-27T05:43:35.139Z",
+  "updatedAt": "2026-03-27T06:09:20.432Z",
   "missions": [
     {
       "id": "session:bb7fd267-79fa-4260-b243-fab19cb60669:none",
@@ -7,15 +7,15 @@
       "name": "none",
       "objective": "Session mission",
       "createdAt": "2026-03-27T05:07:49.898Z",
-      "updatedAt": "2026-03-27T05:43:35.139Z",
+      "updatedAt": "2026-03-27T06:09:20.432Z",
       "status": "done",
-      "workerCount": 6,
+      "workerCount": 8,
       "taskCounts": {
-        "total": 6,
+        "total": 8,
         "pending": 0,
         "blocked": 0,
         "inProgress": 0,
-        "completed": 6,
+        "completed": 8,
         "failed": 0
       },
       "agents": [
@@ -78,33 +78,29 @@
           "latestUpdate": "completed",
           "completedSummary": null,
           "updatedAt": "2026-03-27T05:43:35.139Z"
+        },
+        {
+          "name": "executor:a86ea86",
+          "role": "executor",
+          "ownership": "a86ea8622e8e3444e",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-03-27T06:08:24.400Z"
+        },
+        {
+          "name": "executor:a3a0347",
+          "role": "executor",
+          "ownership": "a3a0347568d3d5a41",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-03-27T06:09:20.432Z"
         }
       ],
       "timeline": [
-        {
-          "id": "session-start:a939bb4fa8a83c651:2026-03-27T05:17:15.819Z",
-          "at": "2026-03-27T05:17:15.819Z",
-          "kind": "update",
-          "agent": "scientist:a939bb4",
-          "detail": "started scientist:a939bb4",
-          "sourceKey": "session-start:a939bb4fa8a83c651"
-        },
-        {
-          "id": "session-stop:a939bb4fa8a83c651:2026-03-27T05:18:42.795Z",
-          "at": "2026-03-27T05:18:42.795Z",
-          "kind": "completion",
-          "agent": "scientist:a939bb4",
-          "detail": "completed",
-          "sourceKey": "session-stop:a939bb4fa8a83c651"
-        },
-        {
-          "id": "session-start:a17f080face5383e2:2026-03-27T05:41:31.131Z",
-          "at": "2026-03-27T05:41:31.131Z",
-          "kind": "update",
-          "agent": "architect:a17f080",
-          "detail": "started architect:a17f080",
-          "sourceKey": "session-start:a17f080face5383e2"
-        },
         {
           "id": "session-stop:a17f080face5383e2:2026-03-27T05:43:35.139Z",
           "at": "2026-03-27T05:43:35.139Z",
@@ -112,6 +108,38 @@
           "agent": "architect:a17f080",
           "detail": "completed",
           "sourceKey": "session-stop:a17f080face5383e2"
+        },
+        {
+          "id": "session-start:a86ea8622e8e3444e:2026-03-27T06:05:41.347Z",
+          "at": "2026-03-27T06:05:41.347Z",
+          "kind": "update",
+          "agent": "executor:a86ea86",
+          "detail": "started executor:a86ea86",
+          "sourceKey": "session-start:a86ea8622e8e3444e"
+        },
+        {
+          "id": "session-start:a3a0347568d3d5a41:2026-03-27T06:06:18.796Z",
+          "at": "2026-03-27T06:06:18.796Z",
+          "kind": "update",
+          "agent": "executor:a3a0347",
+          "detail": "started executor:a3a0347",
+          "sourceKey": "session-start:a3a0347568d3d5a41"
+        },
+        {
+          "id": "session-stop:a86ea8622e8e3444e:2026-03-27T06:08:24.400Z",
+          "at": "2026-03-27T06:08:24.400Z",
+          "kind": "completion",
+          "agent": "executor:a86ea86",
+          "detail": "completed",
+          "sourceKey": "session-stop:a86ea8622e8e3444e"
+        },
+        {
+          "id": "session-stop:a3a0347568d3d5a41:2026-03-27T06:09:20.432Z",
+          "at": "2026-03-27T06:09:20.432Z",
+          "kind": "completion",
+          "agent": "executor:a3a0347",
+          "detail": "completed",
+          "sourceKey": "session-stop:a3a0347568d3d5a41"
         }
       ]
     }

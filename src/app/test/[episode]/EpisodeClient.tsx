@@ -4,10 +4,17 @@ import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGameStore } from '@/lib/store';
 import { EPISODES, getEpisodeQuestions } from '@/lib/questions';
-import QuestionCard from '@/components/ui/QuestionCard';
 import ProgressBar from '@/components/ui/ProgressBar';
 import EpisodeTransition from '@/components/ui/EpisodeTransition';
 import { playEpisodeComplete } from '@/lib/sound';
+
+// Episode scenes
+import OTScene from '@/components/episodes/OTScene';
+import DeskScene from '@/components/episodes/DeskScene';
+import LabScene from '@/components/episodes/LabScene';
+import ConferenceScene from '@/components/episodes/ConferenceScene';
+import BurnoutScene from '@/components/episodes/BurnoutScene';
+import GraduationScene from '@/components/episodes/GraduationScene';
 
 interface EpisodeClientProps {
   episodeNumber: number;
@@ -15,13 +22,14 @@ interface EpisodeClientProps {
 
 type Phase = 'intro' | 'questions' | 'transition';
 
+const SCENE_COMPONENTS = [OTScene, DeskScene, LabScene, ConferenceScene, BurnoutScene, GraduationScene];
+
 export default function EpisodeClient({ episodeNumber }: EpisodeClientProps) {
   const router = useRouter();
   const episode = EPISODES[episodeNumber - 1];
   const questions = getEpisodeQuestions(episodeNumber);
 
   const {
-    responses,
     currentEpisode,
     currentQuestionIndex,
     setResponse,
@@ -54,7 +62,6 @@ export default function EpisodeClient({ episodeNumber }: EpisodeClientProps) {
   }, [episodeNumber, phase, startTimer]);
 
   const currentQuestion = questions[currentQuestionIndex];
-  const currentValue = currentQuestion ? (responses[currentQuestion.id] ?? null) : null;
 
   const handleResponse = useCallback((value: number) => {
     if (!currentQuestion) return;
@@ -79,7 +86,7 @@ export default function EpisodeClient({ episodeNumber }: EpisodeClientProps) {
           router.push('/result');
         }
       }
-    }, 300);
+    }, 400);
   }, [currentQuestion, currentQuestionIndex, episodeNumber, nextQuestion, setResponse, recordQuestionTime, startQuestionTimer, stopTimer, router]);
 
   const handlePrev = useCallback(() => {
@@ -105,7 +112,6 @@ export default function EpisodeClient({ episodeNumber }: EpisodeClientProps) {
   if (phase === 'intro') {
     return (
       <div className="flex flex-col min-h-dvh">
-        {/* SVG placeholder background */}
         <div
           className="flex-1 flex items-end justify-center p-6"
           style={{ backgroundColor: episode.themeColor + '10' }}
@@ -161,29 +167,31 @@ export default function EpisodeClient({ episodeNumber }: EpisodeClientProps) {
     );
   }
 
-  // Question screen
+  // Question screen — render episode-specific scene
+  const SceneComponent = SCENE_COMPONENTS[episodeNumber - 1];
+
   return (
-    <div className="flex flex-col min-h-dvh pt-4 pb-20">
+    <div className="flex flex-col min-h-dvh">
       {/* Back button */}
       {(currentQuestionIndex > 0 || episodeNumber > 1) && (
         <button
           onClick={handlePrev}
-          className="self-start ml-4 mb-2 text-sm text-neutral-400 active:text-neutral-600 min-w-[44px] min-h-[44px] flex items-center"
+          className="self-start ml-4 mt-4 text-sm text-neutral-400 active:text-neutral-600 min-w-[44px] min-h-[44px] flex items-center z-10"
         >
           ← 이전
         </button>
       )}
 
-      <QuestionCard
-        episodeNumber={episodeNumber}
-        questionIndex={currentQuestionIndex}
-        questionText={currentQuestion.text}
-        sceneContext={episode.sceneContext[currentQuestionIndex]}
-        themeColor={episode.themeColor}
-        value={currentValue}
-        onChange={handleResponse}
-        direction={direction}
-      />
+      <div className="flex-1">
+        <SceneComponent
+          episodeNumber={episodeNumber}
+          questionIndex={currentQuestionIndex}
+          themeColor={episode.themeColor}
+          sceneContext={episode.sceneContext[currentQuestionIndex]}
+          onResponse={handleResponse}
+          direction={direction}
+        />
+      </div>
 
       <ProgressBar
         currentEpisode={episodeNumber}
