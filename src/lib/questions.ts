@@ -1,12 +1,7 @@
 import { Question, Episode } from './types';
 
 export const QUESTIONS: Question[] = [
-  // Episode 1: Extraversion (X)
-  {
-    id: 'x1', factor: 'X', facet: 'socialSelfEsteem', episode: 1,
-    text: '전반적으로 나 자신에 대해 꽤 만족하는 편이다.',
-    reverse: false,
-  },
+  // Episode 1: Extraversion (X) — reordered for scene interaction flow
   {
     id: 'x2', factor: 'X', facet: 'socialBoldness', episode: 1,
     text: '나는 모임에서 내 의견을 거의 말하지 않는다.',
@@ -22,16 +17,16 @@ export const QUESTIONS: Question[] = [
     text: '대체로 나는 쾌활하고 낙관적인 편이다.',
     reverse: false,
   },
+  {
+    id: 'x1', factor: 'X', facet: 'socialSelfEsteem', episode: 1,
+    text: '전반적으로 나 자신에 대해 꽤 만족하는 편이다.',
+    reverse: false,
+  },
 
-  // Episode 2: Conscientiousness (C)
+  // Episode 2: Conscientiousness (C) — reordered for scene interaction flow
   {
     id: 'c1', factor: 'C', facet: 'organization', episode: 2,
     text: '나는 마지막에 허둥대지 않도록 미리 계획하고 정리한다.',
-    reverse: false,
-  },
-  {
-    id: 'c2', factor: 'C', facet: 'diligence', episode: 2,
-    text: '나는 목표를 달성하려고 할 때 자주 자신을 몰아붙인다.',
     reverse: false,
   },
   {
@@ -40,15 +35,25 @@ export const QUESTIONS: Question[] = [
     reverse: true,
   },
   {
+    id: 'c2', factor: 'C', facet: 'diligence', episode: 2,
+    text: '나는 목표를 달성하려고 할 때 자주 자신을 몰아붙인다.',
+    reverse: false,
+  },
+  {
     id: 'c4', factor: 'C', facet: 'prudence', episode: 2,
     text: '나는 신중한 생각보다 그 순간의 느낌에 따라 결정을 내린다.',
     reverse: true,
   },
 
-  // Episode 3: Agreeableness (A)
+  // Episode 3: Agreeableness (A) — reordered for scene interaction flow
   {
-    id: 'a1', factor: 'A', facet: 'forgivingness', episode: 3,
-    text: '나에게 잘못한 사람에 대한 나의 태도는 "용서하고 잊자"이다.',
+    id: 'a4', factor: 'A', facet: 'patience', episode: 3,
+    text: '사람들이 가끔 내가 다른 사람에게 너무 비판적이라고 말한다.',
+    reverse: true,
+  },
+  {
+    id: 'a3', factor: 'A', facet: 'flexibility', episode: 3,
+    text: '다른 사람이 실수를 많이 해도, 나는 부정적인 말을 거의 하지 않는다.',
     reverse: false,
   },
   {
@@ -57,26 +62,21 @@ export const QUESTIONS: Question[] = [
     reverse: false,
   },
   {
-    id: 'a3', factor: 'A', facet: 'flexibility', episode: 3,
-    text: '다른 사람이 실수를 많이 해도, 나는 부정적인 말을 거의 하지 않는다.',
+    id: 'a1', factor: 'A', facet: 'forgivingness', episode: 3,
+    text: '나에게 잘못한 사람에 대한 나의 태도는 "용서하고 잊자"이다.',
     reverse: false,
-  },
-  {
-    id: 'a4', factor: 'A', facet: 'patience', episode: 3,
-    text: '사람들이 가끔 내가 다른 사람에게 너무 비판적이라고 말한다.',
-    reverse: true,
   },
 
-  // Episode 4: Honesty-Humility (H)
-  {
-    id: 'h1', factor: 'H', facet: 'sincerity', episode: 4,
-    text: '나는 누군가에게 부탁할 일이 있다고 해서 그 사람을 좋아하는 척하지는 않을 것이다.',
-    reverse: false,
-  },
+  // Episode 4: Honesty-Humility (H) — reordered for scene interaction flow
   {
     id: 'h2', factor: 'H', facet: 'fairness', episode: 4,
     text: '절대 들키지 않는다면, 나는 10억 원을 기꺼이 훔칠 의향이 있다.',
     reverse: true,
+  },
+  {
+    id: 'h1', factor: 'H', facet: 'sincerity', episode: 4,
+    text: '나는 누군가에게 부탁할 일이 있다고 해서 그 사람을 좋아하는 척하지는 않을 것이다.',
+    reverse: false,
   },
   {
     id: 'h3', factor: 'H', facet: 'greedAvoidance', episode: 4,
@@ -143,10 +143,10 @@ export const EPISODES: Episode[] = [
     transitionText: '그렇게 정신없는 첫날이 지나고… 본격적인 대학원 생활이 시작됐다.',
     themeColor: '#F59E0B',
     sceneContext: [
-      '교수님이 간단히 인사를 마치고 자기소개 타임이 시작되었다.',
-      '동기들 사이에서 자연스럽게 대화가 오간다.',
+      '강의실에 들어서자 빈 자리가 여러 곳 보인다.',
       '뒤풀이 식당에서 시끌벅적한 분위기가 이어진다.',
-      '새로운 사람들과의 첫 만남이 마무리되고 있다.',
+      '동기들 사이에서 웃음소리가 들린다.',
+      '집으로 돌아가는 길, 오늘을 되돌아본다.',
     ],
   },
   {
@@ -158,9 +158,9 @@ export const EPISODES: Episode[] = [
     themeColor: '#3B82F6',
     sceneContext: [
       '책상 위에 쌓인 논문 더미를 바라보며 한숨을 내쉰다.',
-      '마감이 코앞인데 아직 시작도 못 했다.',
-      '꼼꼼히 확인하며 과제를 마무리하고 있다.',
-      '다음 주 계획을 세우며 이번 주를 돌아본다.',
+      '논문을 읽다가 모르는 용어를 발견했다.',
+      '마감이 코앞인데 친구가 놀자고 한다.',
+      '과제 제출 버튼 앞에서 고민 중이다.',
     ],
   },
   {
@@ -171,10 +171,10 @@ export const EPISODES: Episode[] = [
     transitionText: '연구실에서 부대끼며 반년이 흘렀다. 어느새 첫 학회 시즌이 다가왔다.',
     themeColor: '#10B981',
     sceneContext: [
-      '선배가 바쁜 일정 때문에 데이터 정리를 부탁했다.',
+      '선배가 내 분석 결과에 대해 비판적인 의견을 냈다.',
       '동기와 분석 방법에 대해 의견이 갈리고 있다.',
       '후배가 코딩을 모르겠다며 조심스럽게 도움을 요청했다.',
-      '연구실 안에서 다양한 관계가 교차하는 하루가 지나간다.',
+      '선배가 교수님 앞에서 내 아이디어를 자기 것처럼 발표했다.',
     ],
   },
   {
@@ -185,10 +185,10 @@ export const EPISODES: Episode[] = [
     transitionText: '학회에서 돌아오니 한 학기가 또 끝나 있었다. 그리고… 지침이 찾아왔다.',
     themeColor: '#8B5CF6',
     sceneContext: [
-      '다른 연구자가 명함을 건네며 공동연구를 제안한다.',
-      '옆에서 누군가 자신의 연구비 규모를 이야기하고 있다.',
-      '포스터 세션에서 예상치 못한 질문을 받았다.',
-      '화려한 포스터들 사이에서 내 발표를 돌아본다.',
+      '발표 준비 중 데이터 해석이 애매한 부분을 발견했다.',
+      '유명 교수님이 내 포스터에 관심을 보인다.',
+      '옆 부스 연구자가 해외 학회 경비, 연구비를 자랑한다.',
+      '질문자가 "이 분야 전문가시네요"라고 추켜세운다.',
     ],
   },
   {
@@ -199,10 +199,10 @@ export const EPISODES: Episode[] = [
     transitionText: '그 터널의 끝이 보이기 시작했다. 졸업 심사 날짜가 잡혔다.',
     themeColor: '#1E293B',
     sceneContext: [
-      '리뷰어의 피드백을 읽으며 복잡한 기분이 든다.',
-      '새벽 연구실에서 동기가 건넨 커피가 따뜻하다.',
-      '힘든 시기지만 주변의 지지가 느껴진다.',
-      '잠시 멈추고 자신을 돌아보는 시간을 갖는다.',
+      '혼자 야간 실험을 해야 한다.',
+      '내일 중간발표인데 PPT가 안 끝남.',
+      '논문 리젝 이메일을 받았다.',
+      '같이 입학한 동기가 먼저 졸업한다.',
     ],
   },
   {
@@ -213,10 +213,10 @@ export const EPISODES: Episode[] = [
     transitionText: '',
     themeColor: '#EC4899',
     sceneContext: [
-      '졸업 심사를 앞두고 지금까지의 여정을 떠올린다.',
-      '새로운 분야에 대한 호기심이 피어오른다.',
-      '앞으로의 길에 대해 다양한 가능성을 상상해 본다.',
-      '어떤 길을 택하든, 이 시간이 의미 있었음을 느낀다.',
+      '주말에 뭘 할까 고민 중이다.',
+      '전혀 다른 분야 세미나 초대가 왔다.',
+      '졸업 후 뭘 하고 싶은지 생각해 본다.',
+      '"좀 특이하다"는 말을 들었다.',
     ],
   },
 ];

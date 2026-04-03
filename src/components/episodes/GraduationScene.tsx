@@ -1,76 +1,270 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { playClick } from '@/lib/sound';
+import {
+  EpisodeSceneShell,
+  ScenePrompt,
+  ChoiceList,
+  type EpisodeSceneProps,
+  type SceneChoice,
+} from './shared';
 
-interface EpisodeSceneProps {
-  episodeNumber: number;
-  questionIndex: number;
+/* ------------------------------------------------------------------ */
+/*  Q0 – SpotPicker: weekend location cards (2‑col + 1 staggered)    */
+/* ------------------------------------------------------------------ */
+
+const SPOT_TINTS = ['#EC489930', '#F59E0B30', '#3B82F630', '#10B98130', '#8B5CF630'];
+
+function SpotPicker({
+  choices,
+  themeColor,
+  onSelect,
+}: {
+  choices: SceneChoice[];
   themeColor: string;
-  sceneContext: string;
-  onResponse: (value: number) => void;
-  direction: number;
+  onSelect: (v: number) => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+
+  function handleTap(value: number) {
+    if (selected !== null) return;
+    playClick();
+    setSelected(value);
+    setTimeout(() => onSelect(value), 320);
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      {choices.map((c, i) => {
+        const isSelected = selected === c.value;
+        const isLastOdd = i === choices.length - 1 && choices.length % 2 === 1;
+        return (
+          <motion.button
+            key={c.value}
+            type="button"
+            onClick={() => handleTap(c.value)}
+            className={`flex flex-col items-center gap-2 rounded-2xl px-3 py-4 ${
+              isLastOdd ? 'col-span-2 mx-auto w-1/2' : ''
+            }`}
+            style={{
+              backgroundColor: isSelected ? `${themeColor}20` : SPOT_TINTS[i] || '#f8fafc',
+              border: isSelected ? `2.5px solid ${themeColor}` : '2px solid transparent',
+              boxShadow: isSelected
+                ? `0 6px 20px ${themeColor}30`
+                : '0 2px 8px rgba(0,0,0,0.06)',
+            }}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.07, type: 'spring', stiffness: 280, damping: 24 }}
+            whileTap={{ scale: 0.96 }}
+          >
+            <span className="text-3xl">{c.emoji}</span>
+            <span
+              className="text-xs font-semibold leading-snug"
+              style={{ color: isSelected ? themeColor : '#374151' }}
+            >
+              {c.label}
+            </span>
+            {/* Sparkle on selected */}
+            {isSelected && (
+              <motion.span
+                className="absolute -right-1 -top-1 text-sm"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: [0, 1.3, 1], opacity: 1, rotate: [0, 15, 0] }}
+                transition={{ duration: 0.4 }}
+              >
+                ✨
+              </motion.span>
+            )}
+          </motion.button>
+        );
+      })}
+    </div>
+  );
 }
 
-const QUESTIONS = [
-  {
-    text: '주말에 뭐 할까?',
-    choices: [
-      { label: '미술관 전시 보러 가기!', score: 5 },
-      { label: '새로운 카페 탐방', score: 4 },
-      { label: '넷플릭스 정주행', score: 3 },
-      { label: '단골 카페에서 커피', score: 2 },
-      { label: '집에서 뒹굴뒹굴', score: 1 },
-    ],
-  },
-  {
-    text: '전혀 다른 분야 세미나 초대가 왔다',
-    choices: [
-      { label: '꼭 가야지! 너무 궁금해', score: 5 },
-      { label: '재밌겠다, 가볼까', score: 4 },
-      { label: '시간 되면 가볼게', score: 3 },
-      { label: '내 분야가 아닌데...', score: 2 },
-      { label: '패스~', score: 1 },
-    ],
-  },
-  {
-    text: '졸업 후 뭘 하고 싶어?',
-    choices: [
-      { label: '예술과 연구를 결합한 새로운 길', score: 5 },
-      { label: '스타트업 창업!', score: 4 },
-      { label: '대기업 R&D', score: 3 },
-      { label: '안정적인 공기업', score: 2 },
-      { label: '부모님이 추천하신 곳', score: 1 },
-    ],
-  },
-  {
-    text: '"좀 특이하다"는 말을 들으면?',
-    choices: [
-      { label: '최고의 칭찬! 감사합니다 ✨', score: 5 },
-      { label: '은근 뿌듯 ㅎㅎ', score: 4 },
-      { label: '그냥 웃고 넘김', score: 3 },
-      { label: '약간 신경 쓰이긴 해...', score: 2 },
-      { label: '기분 나쁜데...', score: 1 },
-    ],
-  },
+/* ------------------------------------------------------------------ */
+/*  Q1 – InterestPicker: ticket/flyer style cards                     */
+/* ------------------------------------------------------------------ */
+
+function InterestPicker({
+  choices,
+  themeColor,
+  onSelect,
+}: {
+  choices: SceneChoice[];
+  themeColor: string;
+  onSelect: (v: number) => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+
+  function handleTap(value: number) {
+    if (selected !== null) return;
+    playClick();
+    setSelected(value);
+    setTimeout(() => onSelect(value), 320);
+  }
+
+  return (
+    <div className="flex flex-wrap justify-center gap-2.5">
+      {choices.map((c, i) => {
+        const isSelected = selected === c.value;
+        return (
+          <motion.button
+            key={c.value}
+            type="button"
+            onClick={() => handleTap(c.value)}
+            className="flex w-[72px] flex-col items-center gap-1.5 rounded-xl px-2 py-3"
+            style={{
+              backgroundColor: isSelected ? themeColor : '#fff',
+              border: isSelected ? `2px solid ${themeColor}` : `2px solid ${themeColor}30`,
+              color: isSelected ? '#fff' : '#374151',
+              boxShadow: isSelected ? `0 4px 14px ${themeColor}35` : 'none',
+            }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.06, type: 'spring', stiffness: 300, damping: 22 }}
+            whileTap={{ scale: 0.93 }}
+          >
+            <span className="text-xl">{c.emoji}</span>
+            <span className="text-[10px] font-semibold leading-tight">{c.label}</span>
+          </motion.button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Q2 – DoorPicker: 5 doors with perspective + open animation        */
+/* ------------------------------------------------------------------ */
+
+interface DoorChoice extends SceneChoice {
+  color: string;
+}
+
+const DOOR_CHOICES: DoorChoice[] = [
+  { emoji: '🎨', label: '예술+연구 새 길', value: 5, color: '#EC4899' },
+  { emoji: '🚀', label: '스타트업 창업', value: 4, color: '#F59E0B' },
+  { emoji: '🏢', label: '대기업 R&D', value: 3, color: '#3B82F6' },
+  { emoji: '🏛️', label: '안정적 공기업', value: 2, color: '#10B981' },
+  { emoji: '👨‍👩‍👧', label: '부모님 추천', value: 1, color: '#8B5CF6' },
 ];
 
-const DOORS = [
-  { emoji: '🎨', color: '#EC4899', label: '취미의 문' },
-  { emoji: '🔭', color: '#F59E0B', label: '호기심의 문' },
-  { emoji: '🚀', color: '#8B5CF6', label: '미래의 문' },
-  { emoji: '✨', color: '#06B6D4', label: '개성의 문' },
+function DoorPicker({
+  choices,
+  themeColor,
+  onSelect,
+}: {
+  choices: DoorChoice[];
+  themeColor: string;
+  onSelect: (v: number) => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+
+  function handleTap(value: number) {
+    if (selected !== null) return;
+    playClick();
+    setSelected(value);
+    setTimeout(() => onSelect(value), 420);
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-3">
+      {/* Doors row */}
+      <div className="flex items-end justify-center gap-2" style={{ perspective: '600px' }}>
+        {choices.map((c, i) => {
+          const isSelected = selected === c.value;
+          return (
+            <motion.button
+              key={c.value}
+              type="button"
+              onClick={() => handleTap(c.value)}
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08, type: 'spring', stiffness: 260, damping: 22 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.div
+                className="flex w-14 flex-col items-center justify-center gap-1 rounded-t-xl"
+                style={{
+                  height: 80,
+                  background: `linear-gradient(180deg, ${c.color}50, ${c.color}25)`,
+                  border: `2px solid ${c.color}80`,
+                  borderBottom: 'none',
+                  boxShadow: isSelected ? `0 4px 20px ${c.color}40` : `0 2px 8px ${c.color}15`,
+                  transformOrigin: 'left center',
+                }}
+                animate={
+                  isSelected
+                    ? { rotateY: -35, scale: 1.05 }
+                    : { rotateY: 0, scale: 1 }
+                }
+                transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+              >
+                <span className="text-2xl">{c.emoji}</span>
+                {/* Door handle */}
+                <div
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ backgroundColor: c.color }}
+                />
+              </motion.div>
+              <span
+                className="mt-1 max-w-[60px] text-center text-[9px] font-bold leading-tight"
+                style={{ color: isSelected ? c.color : '#6b7280' }}
+              >
+                {c.label}
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      {/* Gradient floor line */}
+      <div
+        className="h-1.5 w-full rounded-full"
+        style={{
+          background: `linear-gradient(90deg, ${themeColor}15, #F59E0B40, #3B82F630, #10B98130, ${themeColor}15)`,
+        }}
+      />
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Question definitions                                              */
+/* ------------------------------------------------------------------ */
+
+const Q0_CHOICES: SceneChoice[] = [
+  { emoji: '🎨', label: '미술관 전시', value: 1 },
+  { emoji: '☕', label: '새로운 카페 탐방', value: 2 },
+  { emoji: '📺', label: '넷플릭스 정주행', value: 3 },
+  { emoji: '🏠', label: '단골 카페', value: 4 },
+  { emoji: '🛋️', label: '집에서 뒹굴뒹굴', value: 5 },
 ];
 
-// Sparkle positions for final celebration
-const SPARKLES = Array.from({ length: 12 }, (_, i) => ({
-  id: i,
-  x: Math.round((i / 12) * 100),
-  y: Math.round(Math.random() * 60 + 10),
-  delay: i * 0.08,
-  emoji: ['✨', '🌟', '💫', '⭐'][i % 4],
-}));
+const Q1_CHOICES: SceneChoice[] = [
+  { emoji: '🤩', label: '꼭 가야지!', value: 5 },
+  { emoji: '😊', label: '재밌겠다', value: 4 },
+  { emoji: '🤔', label: '시간 되면', value: 3 },
+  { emoji: '😕', label: '내 분야가 아닌데', value: 2 },
+  { emoji: '🚫', label: '패스~', value: 1 },
+];
+
+const Q3_CHOICES: SceneChoice[] = [
+  { label: '최고의 칭찬! 감사합니다', value: 5, emoji: '✨' },
+  { label: '은근 뿌듯 ㅎㅎ', value: 4, emoji: '😏' },
+  { label: '그냥 웃고 넘김', value: 3, emoji: '🙂' },
+  { label: '약간 신경 쓰이긴 해...', value: 2, emoji: '😅' },
+  { label: '기분 나쁜데...', value: 1, emoji: '😤' },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Main component                                                    */
+/* ------------------------------------------------------------------ */
 
 export default function GraduationScene({
   episodeNumber,
@@ -79,179 +273,56 @@ export default function GraduationScene({
   onResponse,
   direction,
 }: EpisodeSceneProps) {
-  const [selectedScore, setSelectedScore] = useState<number | null>(null);
-  const question = QUESTIONS[questionIndex];
-  const door = DOORS[questionIndex];
-  const isLastQuestion = questionIndex === 3;
-
-  const handleChoice = (score: number) => {
-    if (selectedScore !== null) return;
-    playClick();
-    setSelectedScore(score);
-    setTimeout(() => {
-      setSelectedScore(null);
-      onResponse(score);
-    }, 350);
-  };
+  const sceneKey = `graduation-${episodeNumber}-${questionIndex}`;
 
   return (
-    <AnimatePresence mode="wait" custom={direction}>
-      <motion.div
-        key={`grad-${episodeNumber}-${questionIndex}`}
-        custom={direction}
-        initial={{ x: direction > 0 ? 300 : -300, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: direction > 0 ? -300 : 300, opacity: 0 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="flex flex-col flex-1 px-4"
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <span
-            className="text-xs font-bold px-2 py-1 rounded"
-            style={{ backgroundColor: themeColor + '20', color: themeColor }}
-          >
-            EP.{episodeNumber}
-          </span>
-          <span className="text-xs text-neutral-400">Q{questionIndex + 1}/4</span>
-        </div>
-
-        {/* Corridor with doors */}
-        <div
-          className="relative rounded-2xl p-4 mb-4 overflow-hidden"
-          style={{
-            background: `linear-gradient(160deg, #fdf2f8 0%, #fef3c7 50%, #fdf2f8 100%)`,
-            border: `1.5px solid ${themeColor}30`,
-          }}
-        >
-          {/* Sparkle effect on last question */}
-          {isLastQuestion && (
-            <div className="absolute inset-0 pointer-events-none">
-              {SPARKLES.map((s) => (
-                <motion.span
-                  key={s.id}
-                  className="absolute text-xs"
-                  style={{ left: `${s.x}%`, top: `${s.y}%` }}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: [0, 1, 0], scale: [0, 1.2, 0], y: [-4, -12] }}
-                  transition={{ duration: 1.2, delay: s.delay, repeat: Infinity, repeatDelay: 1.5 }}
-                >
-                  {s.emoji}
-                </motion.span>
-              ))}
-            </div>
-          )}
-
-          {/* Corridor perspective */}
-          <div className="relative flex items-end justify-center gap-2 h-20">
-            {/* Previous doors (smaller, in background) */}
-            {DOORS.slice(0, questionIndex).map((d, i) => (
-              <motion.div
-                key={i}
-                className="flex flex-col items-center justify-end"
-                style={{ transform: `scale(${0.55 + i * 0.1})`, opacity: 0.5 + i * 0.1 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 + i * 0.1 }}
-              >
-                <div
-                  className="w-8 h-12 rounded-t-lg flex items-center justify-center"
-                  style={{ backgroundColor: d.color + '30', border: `2px solid ${d.color}50` }}
-                >
-                  <span className="text-base">{d.emoji}</span>
-                </div>
-              </motion.div>
-            ))}
-
-            {/* Current door — open with animation */}
-            <motion.div
-              className="flex flex-col items-center"
-              initial={{ rotateY: -90, opacity: 0 }}
-              animate={{ rotateY: 0, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 22, delay: 0.1 }}
-              style={{ perspective: 400 }}
-            >
-              <div
-                className="w-14 h-20 rounded-t-xl flex flex-col items-center justify-center gap-1 shadow-md"
-                style={{
-                  background: `linear-gradient(160deg, ${door.color}40, ${door.color}20)`,
-                  border: `2.5px solid ${door.color}80`,
-                  boxShadow: `0 4px 16px ${door.color}30`,
-                }}
-              >
-                <span className="text-2xl">{door.emoji}</span>
-                <span className="text-[9px] font-bold" style={{ color: door.color }}>{door.label}</span>
-              </div>
-              {/* Door handle */}
-              <div
-                className="w-1.5 h-1.5 rounded-full mt-0.5"
-                style={{ backgroundColor: door.color }}
-              />
-            </motion.div>
-          </div>
-
-          {/* Gradient floor */}
-          <div
-            className="h-1.5 rounded-full mt-2"
-            style={{
-              background: `linear-gradient(90deg, ${themeColor}20, #F59E0B40, ${themeColor}20)`,
-            }}
+    <EpisodeSceneShell
+      sceneKey={sceneKey}
+      direction={direction}
+      episodeNumber={episodeNumber}
+      questionIndex={questionIndex}
+      themeColor={themeColor}
+    >
+      {questionIndex === 0 && (
+        <>
+          <ScenePrompt
+            title="주말에 뭐 할까?"
+            description="졸업 심사 끝나면 뭐 하고 싶어?"
+            themeColor={themeColor}
           />
-        </div>
+          <SpotPicker choices={Q0_CHOICES} themeColor={themeColor} onSelect={onResponse} />
+        </>
+      )}
 
-        {/* Question */}
-        <div
-          className="rounded-xl p-3 mb-4"
-          style={{
-            background: `linear-gradient(135deg, ${themeColor}12, #F59E0B0c)`,
-            border: `1px solid ${themeColor}25`,
-          }}
-        >
-          <p className="text-sm leading-relaxed text-neutral-800 text-center font-medium">
-            {question.text}
-          </p>
-        </div>
+      {questionIndex === 1 && (
+        <>
+          <ScenePrompt
+            title="전혀 다른 분야 세미나 초대가 왔다"
+            themeColor={themeColor}
+          />
+          <InterestPicker choices={Q1_CHOICES} themeColor={themeColor} onSelect={onResponse} />
+        </>
+      )}
 
-        {/* Choice Cards — emerging from door */}
-        <div className="flex flex-col gap-2">
-          {question.choices.map((choice, i) => {
-            const isSelected = selectedScore === choice.score;
-            // Gradient shifts from pink to amber based on score
-            const cardAccent = choice.score >= 4 ? themeColor : '#F59E0B';
-            return (
-              <motion.button
-                key={choice.score}
-                type="button"
-                onClick={() => handleChoice(choice.score)}
-                className="w-full text-left rounded-xl px-4 py-3 border-2 transition-colors bg-white"
-                style={{
-                  minHeight: 44,
-                  borderColor: isSelected ? cardAccent : cardAccent + '35',
-                  backgroundColor: isSelected ? cardAccent + '15' : 'white',
-                }}
-                initial={{ opacity: 0, y: 12, scale: 0.95 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: isSelected ? 1.03 : 1,
-                }}
-                transition={{
-                  opacity: { delay: 0.15 + i * 0.07 },
-                  y: { delay: 0.15 + i * 0.07, type: 'spring', stiffness: 300, damping: 25 },
-                  scale: { duration: 0.15 },
-                }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <span
-                  className="text-sm leading-snug block"
-                  style={{ color: isSelected ? cardAccent : '#374151' }}
-                >
-                  {choice.label}
-                </span>
-              </motion.button>
-            );
-          })}
-        </div>
-      </motion.div>
-    </AnimatePresence>
+      {questionIndex === 2 && (
+        <>
+          <ScenePrompt
+            title="졸업 후 뭘 하고 싶어?"
+            themeColor={themeColor}
+          />
+          <DoorPicker choices={DOOR_CHOICES} themeColor={themeColor} onSelect={onResponse} />
+        </>
+      )}
+
+      {questionIndex === 3 && (
+        <>
+          <ScenePrompt
+            title={'"좀 특이하다"는 말을 들으면?'}
+            themeColor={themeColor}
+          />
+          <ChoiceList choices={Q3_CHOICES} themeColor={themeColor} onSelect={onResponse} />
+        </>
+      )}
+    </EpisodeSceneShell>
   );
 }
