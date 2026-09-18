@@ -44,15 +44,15 @@ function PosterBoard({ themeColor }: { themeColor: string }) {
       </div>
       {/* Speech bubble + people */}
       <div className="mt-1 flex items-center gap-2">
-        <span className="text-sm">🧑‍🔬</span>
+        <span className="text-base">🧑‍🔬</span>
         <div
-          className="rounded-lg px-2 py-0.5 text-[9px] font-medium"
+          className="rounded-lg px-2 py-0.5 text-sm font-medium"
           style={{ backgroundColor: themeColor + '20', color: themeColor }}
         >
           💬 발표 중...
         </div>
-        <span className="text-sm">👩‍🏫</span>
-        <span className="text-sm">🧑‍💼</span>
+        <span className="text-base">👩‍🏫</span>
+        <span className="text-base">🧑‍💼</span>
       </div>
     </div>
   );
@@ -61,13 +61,14 @@ function PosterBoard({ themeColor }: { themeColor: string }) {
 // ---------------------------------------------------------------------------
 // Q0 – DataAction (fairness h2, reverse=true)
 // Honest handling → LOW value so reverseScore(x)=6-x yields HIGH
+// Bar chart + integrated toolbar actions (unified data-app panel)
 // ---------------------------------------------------------------------------
 const DATA_ACTIONS = [
-  { emoji: '📋', label: '한계점으로 명시', value: 1 },
-  { emoji: '📝', label: '주석 달아두기', value: 2 },
-  { emoji: '🗑️', label: '발표에서 빼기', value: 3 },
-  { emoji: '📈', label: '유리하게 해석', value: 4 },
-  { emoji: '🚫', label: '없던 걸로', value: 5 },
+  { emoji: '📋', label: '한계명시', value: 1 },
+  { emoji: '📝', label: '주석달기', value: 2 },
+  { emoji: '🗑️', label: '발표에서빼기', value: 3 },
+  { emoji: '📈', label: '유리해석', value: 4 },
+  { emoji: '🚫', label: '없던걸로', value: 5 },
 ] as const;
 
 function DataAction({
@@ -86,66 +87,100 @@ function DataAction({
     setTimeout(() => onSelect(value), 300);
   }
 
-  // Bar data for the mini chart – index 2 is the ambiguous one
+  // Bar data – index 2 is the ambiguous one (pulses amber)
   const bars = [
-    { height: 48, color: themeColor + '50' },
-    { height: 64, color: themeColor + '50' },
-    { height: 36, color: '#f59e0b' },
-    { height: 56, color: themeColor + '50' },
-    { height: 44, color: themeColor + '50' },
+    { height: 52, label: 'D1' },
+    { height: 68, label: 'D2' },
+    { height: 38, label: '⚠️' },
+    { height: 60, label: 'D4' },
+    { height: 46, label: 'D5' },
   ];
 
   return (
-    <div className="flex w-full flex-col gap-4">
-      {/* Mini bar chart visualization */}
-      <div className="mx-auto flex w-full max-w-[260px] items-end justify-center gap-3 rounded-xl border border-neutral-100 bg-white px-4 py-3 shadow-sm">
-        {bars.map((bar, i) => (
-          <div key={i} className="flex flex-col items-center gap-1">
-            <motion.div
-              className="w-8 rounded-t-md"
-              style={{
-                height: `${bar.height}px`,
-                backgroundColor: bar.color,
-              }}
-              animate={i === 2 ? { opacity: [1, 0.4, 1] } : {}}
-              transition={
-                i === 2
-                  ? { repeat: Infinity, duration: 1.5, ease: 'easeInOut' }
-                  : {}
-              }
-            />
-            <span className="text-[9px] text-neutral-400">
-              {i === 2 ? '⚠️' : `D${i + 1}`}
-            </span>
-          </div>
-        ))}
+    <div
+      className="mx-auto w-full max-w-[320px] overflow-hidden rounded-2xl border bg-white shadow-sm"
+      style={{ borderColor: '#e5e7eb' }}
+    >
+      {/* Chart header */}
+      <div
+        className="flex items-center gap-2 border-b px-4 py-2"
+        style={{ borderColor: '#f1f5f9' }}
+      >
+        <div
+          className="h-2 w-2 rounded-full"
+          style={{ backgroundColor: themeColor }}
+        />
+        <span className="text-base font-semibold text-neutral-500">
+          연구 데이터 분석
+        </span>
       </div>
 
-      {/* Action grid – 2 columns, last item centered */}
-      <div className="grid grid-cols-2 gap-2">
-        {DATA_ACTIONS.map((action, i) => {
+      {/* Bar chart area */}
+      <div className="flex items-end justify-center gap-4 px-5 pb-2 pt-5">
+        {bars.map((bar, i) => {
+          const isAmbiguous = i === 2;
+          return (
+            <div key={i} className="flex flex-col items-center gap-1.5">
+              <motion.div
+                className="w-9 rounded-t-md"
+                style={{
+                  height: `${bar.height}px`,
+                  backgroundColor: isAmbiguous ? '#f59e0b' : themeColor + '50',
+                }}
+                animate={
+                  isAmbiguous
+                    ? { opacity: [1, 0.4, 1], backgroundColor: ['#f59e0b', '#fbbf24', '#f59e0b'] }
+                    : {}
+                }
+                transition={
+                  isAmbiguous
+                    ? { repeat: Infinity, duration: 1.5, ease: 'easeInOut' }
+                    : {}
+                }
+              />
+              <span
+                className="text-sm font-medium"
+                style={{
+                  color: isAmbiguous ? '#d97706' : '#9ca3af',
+                }}
+              >
+                {bar.label}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Toolbar divider */}
+      <div className="mx-4 border-t" style={{ borderColor: '#f1f5f9' }} />
+
+      {/* Action toolbar – integrated into chart panel */}
+      <div className="flex items-center justify-around px-2 py-2.5">
+        {DATA_ACTIONS.map((action) => {
           const isSelected = selected === action.value;
-          const isLast = i === DATA_ACTIONS.length - 1;
           return (
             <motion.button
               key={action.value}
               type="button"
               onClick={() => handleTap(action.value)}
-              className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2.5 text-left ${
-                isLast ? 'col-span-2 mx-auto w-1/2' : ''
-              }`}
+              className="flex flex-col items-center gap-0.5 rounded-lg px-2 py-1.5 transition-colors"
               style={{
-                borderColor: isSelected ? themeColor : '#e5e7eb',
-                backgroundColor: isSelected ? `${themeColor}18` : 'white',
+                backgroundColor: isSelected ? themeColor + '18' : 'transparent',
               }}
-              whileTap={{ scale: 0.95 }}
-              animate={isSelected ? { scale: [1, 1.05, 1] } : {}}
-              transition={{ duration: 0.2 }}
+              whileTap={{ scale: 0.9 }}
+              animate={isSelected ? { scale: [1, 1.15, 1] } : {}}
+              transition={{ type: 'tween', duration: 0.2 }}
             >
-              <span className="text-lg">{action.emoji}</span>
+              <motion.span
+                className="text-lg"
+                animate={isSelected ? { scale: [1, 1.2, 1] } : {}}
+                transition={{ type: 'tween', duration: 0.2 }}
+              >
+                {action.emoji}
+              </motion.span>
               <span
-                className="text-xs font-medium"
-                style={{ color: isSelected ? themeColor : '#4b5563' }}
+                className="text-sm font-medium leading-tight"
+                style={{ color: isSelected ? themeColor : '#6b7280' }}
               >
                 {action.label}
               </span>
@@ -153,8 +188,6 @@ function DataAction({
           );
         })}
       </div>
-
-      <p className="text-center text-[11px] text-neutral-400">행동을 선택하세요</p>
     </div>
   );
 }
@@ -211,7 +244,7 @@ const Q_DATA: QItem[] = [
     // Humble → LOW value so reverseScore yields HIGH
     title: "질문자가 '이 분야 전문가시네요'라고 추켜세운다",
     type: 'choices',
-    variant: 'default',
+    variant: 'speech',
     choices: [
       { label: '아직 많이 부족합니다 ㅎㅎ', value: 1, emoji: '🙏' },
       { label: '감사합니다, 아직 공부 중이에요', value: 2, emoji: '😊' },

@@ -9,7 +9,7 @@ interface LikertScaleProps {
   themeColor: string;
 }
 
-const SIZES = [36, 40, 44, 48, 52];
+const SIZES = [42, 46, 50, 54, 58];
 const LABELS = ['전혀\n아니다', '', '보통', '', '매우\n그렇다'];
 
 export default function LikertScale({ value, onChange, themeColor }: LikertScaleProps) {
@@ -36,12 +36,12 @@ export default function LikertScale({ value, onChange, themeColor }: LikertScale
               }}
               whileTap={{ scale: 0.9 }}
               animate={isSelected ? { scale: [1, 1.15, 1] } : {}}
-              transition={{ duration: 0.2 }}
+              transition={{ type: 'tween', duration: 0.2 }}
             >
-              <span className="text-sm font-bold">{n}</span>
+              <span className="text-base font-bold">{n}</span>
             </motion.button>
             {LABELS[i] && (
-              <span className="text-[10px] text-neutral-400 text-center whitespace-pre-line leading-tight">
+              <span className="text-sm text-neutral-400 text-center whitespace-pre-line leading-tight">
                 {LABELS[i]}
               </span>
             )}

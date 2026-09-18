@@ -19,7 +19,7 @@ export default function ProgressBar({ currentEpisode, currentQuestionIndex }: Pr
           return (
             <div
               key={ep.number}
-              className="flex-1 h-1.5 rounded-full bg-neutral-200 overflow-hidden"
+              className="flex-1 h-2 rounded-full bg-neutral-200 overflow-hidden"
             >
               <div
                 className="h-full rounded-full transition-all duration-300"
@@ -33,8 +33,8 @@ export default function ProgressBar({ currentEpisode, currentQuestionIndex }: Pr
         })}
       </div>
       <div className="flex justify-between mt-1">
-        <span className="text-[10px] text-neutral-400">EP.{currentEpisode}</span>
-        <span className="text-[10px] text-neutral-400">{currentQuestionIndex + 1}/4</span>
+        <span className="text-sm text-neutral-400">EP.{currentEpisode}</span>
+        <span className="text-sm text-neutral-400">{currentQuestionIndex + 1}/4</span>
       </div>
     </div>
   );

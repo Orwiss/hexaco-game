@@ -1,4 +1,4 @@
-import { BHIResponse, FactorKey, FactorScores, ClassificationResult, TypeResult } from './types';
+import { BHIResponse, FactorKey, FactorScores, ClassificationResult, TypeResult, BalanceLevel } from './types';
 import { QUESTIONS } from './questions';
 
 // --- Reverse scoring ---
@@ -41,8 +41,14 @@ export function getProfileSD(scores: FactorScores): number {
   return Math.sqrt(variance);
 }
 
-// Scale-derived threshold: scaleRange / (2 * sqrt(numFactors))
-const BALANCED_THRESHOLD = 4 / (2 * Math.sqrt(6)); // ≈ 0.8165
+// --- Balance level thresholds ---
+// profileSD thresholds for balance classification
+const BALANCE_HIGH_THRESHOLD = 0.45;   // very flat profile
+const BALANCE_MODERATE_THRESHOLD = 0.70; // moderately flat
+
+// For T9-as-primary: must also have tiny top1-top2 gap
+const T9_SD_THRESHOLD = 0.35;
+const T9_GAP_THRESHOLD = 0.05;
 
 // --- Type weight vectors ---
 // [H, C, X, A, E, O]
@@ -123,9 +129,17 @@ function calculateTypeScore(scores: FactorScores, weights: number[]): number {
   return raw / absSum;
 }
 
+// --- Balance level classification ---
+function getBalanceLevel(profileSD: number): BalanceLevel {
+  if (profileSD < BALANCE_HIGH_THRESHOLD) return 'high';
+  if (profileSD < BALANCE_MODERATE_THRESHOLD) return 'moderate';
+  return 'low';
+}
+
 // --- Main classification ---
 export function classifyType(factorScores: FactorScores): ClassificationResult {
   const profileSD = getProfileSD(factorScores);
+  const balanceLevel = getBalanceLevel(profileSD);
 
   // Normalized scores (0-100%)
   const factors: FactorKey[] = ['H', 'E', 'X', 'A', 'C', 'O'];
@@ -134,21 +148,7 @@ export function classifyType(factorScores: FactorScores): ClassificationResult {
     normalizedScores[f] = normalize(factorScores[f]);
   }
 
-  // Check if balanced
-  if (profileSD < BALANCED_THRESHOLD) {
-    const balanced = { ...TYPE_INFO.T9, score: 0 };
-    return {
-      primary: balanced,
-      secondary: null,
-      isBalanced: true,
-      isTied: false,
-      factorScores,
-      normalizedScores,
-      profileSD,
-    };
-  }
-
-  // Calculate all type scores
+  // Always calculate T1~T8 scores
   const typeScores: { id: string; score: number }[] = Object.entries(TYPE_WEIGHTS).map(
     ([id, weights]) => ({ id, score: calculateTypeScore(factorScores, weights) })
   );
@@ -158,7 +158,24 @@ export function classifyType(factorScores: FactorScores): ClassificationResult {
 
   const first = typeScores[0];
   const second = typeScores[1];
-  const isTied = (first.score - second.score) < 0.1;
+  const gap = first.score - second.score;
+  const isTied = gap < 0.1;
+
+  // T9 as primary only when profile is EXTREMELY flat AND types are indistinguishable
+  if (profileSD < T9_SD_THRESHOLD && gap < T9_GAP_THRESHOLD) {
+    const balanced = { ...TYPE_INFO.T9, score: 0 };
+    const fallback: TypeResult = { ...TYPE_INFO[first.id], score: first.score };
+    return {
+      primary: balanced,
+      secondary: fallback,
+      isBalanced: true,
+      isTied: true,
+      balanceLevel,
+      factorScores,
+      normalizedScores,
+      profileSD,
+    };
+  }
 
   const primary: TypeResult = { ...TYPE_INFO[first.id], score: first.score };
   const secondary: TypeResult = { ...TYPE_INFO[second.id], score: second.score };
@@ -168,6 +185,7 @@ export function classifyType(factorScores: FactorScores): ClassificationResult {
     secondary,
     isBalanced: false,
     isTied,
+    balanceLevel,
     factorScores,
     normalizedScores,
     profileSD,

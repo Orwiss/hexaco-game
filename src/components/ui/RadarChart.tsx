@@ -107,7 +107,7 @@ export default function RadarChart({ scores }: RadarChartProps) {
               y={y}
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-[11px] fill-neutral-600"
+              className="text-sm fill-neutral-600"
               fontFamily="GangwonEducationSaeum, sans-serif"
             >
               {f.labelKo}

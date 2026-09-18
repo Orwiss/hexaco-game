@@ -38,29 +38,29 @@ export default function QuestionCard({
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <span
-            className="text-xs font-bold px-2 py-1 rounded"
+            className="text-sm font-bold px-2 py-1 rounded"
             style={{ backgroundColor: themeColor + '20', color: themeColor }}
           >
             EP.{episodeNumber}
           </span>
-          <span className="text-xs text-neutral-400">
+          <span className="text-sm text-neutral-400">
             Q{questionIndex + 1}/4
           </span>
         </div>
 
         {/* Scene context */}
         <div className="bg-neutral-50 rounded-xl p-4 mb-6">
-          <p className="text-sm text-neutral-500 leading-relaxed">{sceneContext}</p>
+          <p className="text-base text-neutral-500 leading-relaxed">{sceneContext}</p>
         </div>
 
         {/* Instruction */}
-        <p className="text-[11px] text-neutral-400 text-center mb-2">
+        <p className="text-sm text-neutral-400 text-center mb-2">
           평소의 나를 생각하며 답해주세요
         </p>
 
         {/* Question */}
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-neutral-100 mb-6">
-          <p className="text-base leading-relaxed text-neutral-800 text-center">
+          <p className="text-lg leading-relaxed text-neutral-800 text-center">
             &ldquo;{questionText}&rdquo;
           </p>
         </div>

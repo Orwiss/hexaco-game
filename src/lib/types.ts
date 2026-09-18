@@ -31,11 +31,14 @@ export interface TypeResult {
   score: number;
 }
 
+export type BalanceLevel = 'high' | 'moderate' | 'low';
+
 export interface ClassificationResult {
   primary: TypeResult;
   secondary: TypeResult | null;
   isBalanced: boolean;
   isTied: boolean;
+  balanceLevel: BalanceLevel;
   factorScores: FactorScores;
   normalizedScores: Record<FactorKey, number>;
   profileSD: number;
